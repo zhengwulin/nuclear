@@ -25,3 +25,33 @@ jobs:
       shell: bash
       env:
         GITHASH: ${GITHUB_SHA}
+
+    - name: Build Linux artifacts
+      if: matrix.os == 'ubuntu-latest'
+      run: npm run build:linux
+    - name: Build Windows artifacts
+      if: matrix.os == 'windows-latest'
+      run: npm run build:win
+    - name: Build Mac OS artifacts
+      if: matrix.os == 'macOS-latest'
+      run: npm run build:macos
+
+    - name: Create release
+      id: create_release
+      uses: actions/create-release@master
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Nuclear ${{ github.ref }}
+        draft: true
+        prerelease: true
+    - name: Upload Linux .deb
+      id: upload_artifacts
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHASH: ${GITHUB_SHA}
+      with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./packages/app/release/nuclear-${GITHUB_SHA}.deb
+          asset_name: nuclear-${GITHUB_SHA}.deb
