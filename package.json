@@ -31,11 +31,9 @@
     "build:macos": "cd packages/app && npm run build:dist && npm run build:electron && npm run build:macos",
     "build:all": "cd packages/app && npm run build:dist && npm run build:electron && npm run build:all"
   },
-  "dependencies": {
-    "eslint": "^6.5.1"
-  },
   "devDependencies": {
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "eslint": "^6.5.1"
   },
   "engines": {
     "node": ">=0.11.0",
