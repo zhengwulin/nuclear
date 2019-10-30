@@ -31,11 +31,6 @@ jobs:
       run: npm run build:linux
       env:
         GITHASH: ${GITHUB_SHA}
-    - name: Build Windows artifacts
-      if: matrix.os == 'windows-latest'
-      run: npm run build:win
-      env:
-        GITHASH: ${GITHUB_SHA}
     - name: Build Mac OS artifacts
       if: matrix.os == 'macOS-latest'
       run: npm run build:macos
